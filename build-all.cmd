@@ -8,10 +8,8 @@ docker compose build
 echo .
 echo Running container services
 docker compose up -d
+echo .
+echo Launching the web browser please wait...
 timeout /T 10 /NOBREAK 
 echo .
-echo Now restarting the book-service
-docker compose restart book-service
-echo .
-echo Launching the web browser
 start http://localhost:8090/
