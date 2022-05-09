@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+	<meta charset='utf-8' />
+	<title>Books Library</title>
+	<style>
+	body{
+		margin: 0px;
+		padding: 0px;
+		background-color: darkgray;
+		}
+	h1 {
+		margin: 0px;
+		padding: 10px;
+		background-color: cadetblue;
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		border-bottom: 2pt solid darkgoldenrod;
+	}
+	div{
+		margin: 15px;
+	}
+	table thead{
+		background-color: chocolate;
+		border-bottom: 2px solid red;
+	}
+	table tbody{
+		background-color: darkolivegreen;
+	}
+	table tbody td {
+		border-bottom: 2px dotted black;
+	}
+	</style>
+</head>
+<body>
+	<h1>List of Books</h1>
+	<div>
+	<table cellspacing="0" cellpadding="10" width="400px">
+		<thead>
+			<tr>
+				<td>Book ID</td>
+				<td>Title</td>
+				<td>Author Name</td>
+				<td>Price</td>
+			</tr>
+		</thead>
+		<tbody th:each="b : ${books}">
+			<tr>
+				<td th:text="${b.bookId}"></td>
+				<td th:text="${b.bookName}"></td>
+				<td th:text="${b.bookAuthor}"></td>
+				<td th:text="${b.bookPrice}"></td>
+			</tr>
+			<tfoot th:if="${error != null}">
+				<span th:text="${error}"></span>	
+			</tfoot>
+		</tbody>
+	</table>
+	</div>
+</body>
+</html>

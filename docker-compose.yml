@@ -1,0 +1,37 @@
+version: '3.5'
+
+services:
+
+  db1:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306
+
+  book-service:
+    image: mahendrshinde/cg-demo:book-service
+    build: spring-boot-book-service
+    depends_on:
+    - db1
+    ports:
+      - 8080
+    environment:
+      #SPRING_DATASOURCE_URL: jdbc:mysql://database-1.c3ickf4lalap.us-east-2.rds.amazonaws.com/library
+      SPRING_DATASOURCE_URL: jdbc:mysql://db1:3306/mydb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+  student-service:
+    image: mahendrshinde/cg-demo:student-service
+    build:  spring-boot-student-service
+    depends_on:
+    - book-service
+    - db1
+    ports:
+      - 8090:8080
+    environment:
+      - BOOKSERVICE=http://book-service:8080
