@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-api
+  template:
+    metadata:
+      labels:
+        app: book-api
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      containers:
+      - name: app1
+        image: mahendrshinde/cg-demo:book-service
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: 'jdbc:mysql://mydb.cglx29ijeh5q.us-east-1.rds.amazonaws.com/mydb'
+        - name: SPRING_DATASOURCE_USERNAME
+          value: admin
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: admin123
+        ports:
+        - containerPort: 8080 ## Your PORT number !
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: student-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: student-api
+  template:
+    metadata:
+      labels:
+        app: student-api
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      containers:
+      - name: app1
+        image: mahendrshinde/cg-demo:student-service
+        env:
+        - name: BOOKSERVICE
+          value: 'http://book-service'
+        ports:
+        - containerPort: 8080 ## Your PORT number !

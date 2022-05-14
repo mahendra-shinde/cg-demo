@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: book-service
+spec:
+  # On docker desktop load-balancer type would map service to 'localhost'
+  type: NodePort
+  selector:
+    app: book-api
+  ports:
+  - port: 80
+    nodePort: 30001
+    targetPort: 8080 ### Container Port / Spring BOOT Server Port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: student-service
+spec:
+  # On docker desktop load-balancer type would map service to 'localhost'
+  type: NodePort
+  selector:
+    app: student-api
+  ports:
+  - port: 80
+    nodePort: 30002
+    targetPort: 8080 ### Container Port / Spring BOOT Server Port
+    
+    
